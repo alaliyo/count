@@ -34,3 +34,8 @@ export const btnNameState = atom({
     key: "btnNameState",
     default: "시작",
 });
+
+export const nickNameState = atom({
+    key: "nickNameState",
+    default: "",
+})

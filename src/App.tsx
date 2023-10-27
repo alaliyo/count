@@ -9,23 +9,36 @@ import {
 } from "./atom";
 import styled from "styled-components";
 import { useEffect } from "react";
-
+import Example from "./components/Example";
 
 function App() {
-  const [count, setcount] = useRecoilState(countState);
+  const [count, setCount] = useRecoilState(countState);
   const [start, setStart] = useRecoilState(countStartState);
   const [btnName, setbtnName] = useRecoilState(btnNameState);
   const fontSize = useRecoilValue(fontSizeState);
   const [timer, setTimer] = useRecoilState(timerState);
   const [milliseconds, setMilliseconds] = useRecoilState(millisecondsState);
 
+  const handleTouchStart = (event: any) => {
+    if (start && event.touches.length >= 2) {
+      setCount(count + 1); // 카운트 증가
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('touchstart', handleTouchStart);
+    return () => {
+      document.removeEventListener('touchstart', handleTouchStart);
+    };
+  }, [count]);
+
   const plusEvent = () => {
-    setcount(count + 1);
+    setCount(count + 1);
   };
 
   const startEvent = () => {
     setStart(true);
-    setcount(0);
+    setCount(0);
     setTimer(0);
     setMilliseconds(0);
   };
@@ -57,6 +70,7 @@ function App() {
 
   return (
     <Box>
+      <Example />
       {!start && <StartBtn onClick={startEvent}>{btnName}</StartBtn>}
       <TimeSpan> {timer}.{milliseconds <= 9 ? `0${milliseconds}` : milliseconds}</TimeSpan>
       <br />
@@ -88,6 +102,9 @@ interface BackgroundColotProps {
 
 const Box = styled.div`
   text-align: center;
+  position: fixed; /* 상단에서 고정 */
+  top: 0; /* 페이지 상단에 위치 */
+  width: 100%; /* 전체 너비로 확장 */
 `;
 
 const StartBtn = styled.button`
