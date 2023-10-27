@@ -22,7 +22,7 @@ function App() {
   const [timer, setTimer] = useRecoilState(timerState);
   const [milliseconds, setMilliseconds] = useRecoilState(millisecondsState);
   const nickName = useRecoilValue(nickNameState);
-
+  
   const handleTouchStart = (event: any) => {
     if (start && event.touches.length >= 2) {
       setCount(count + 1); // 카운트 증가
@@ -37,7 +37,7 @@ function App() {
   }, [count]);
 
   const plusEvent = () => {
-    setCount(count + 1);
+    setCount(count + 100);
   };
 
   const startEvent = () => {

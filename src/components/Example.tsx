@@ -6,6 +6,7 @@ import { useSetRecoilState } from 'recoil';
 import { nickNameState } from '../atom';
 
 function Example() {
+    
     const [text, setText] = useState("");
     const setNickName = useSetRecoilState(nickNameState);
     const [show, setShow] = useState(false);
@@ -15,12 +16,12 @@ function Example() {
 
     const changeNickName = (e: React.ChangeEvent<HTMLInputElement>) => {
         setText(e.target.value);
-    }
+    };
 
     const onClick = () => {
         setNickName(text);
         setShow(false);
-    }
+    };
 
     return (
         <>

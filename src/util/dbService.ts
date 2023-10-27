@@ -1,7 +1,5 @@
 import { collection, doc, onSnapshot, orderBy, query, setDoc } from "firebase/firestore";
 import { dbService } from "../firebase";
-import { useRecoilValue } from "recoil";
-import { millisecondsState, nickNameState, timerState } from "../atom";
  
 export interface RecordGetProps {
     id: number;
@@ -11,8 +9,8 @@ export interface RecordGetProps {
  
 export function RecordGet(): Promise<RecordGetProps[]> {
     const q = query(
-        collection(dbService, "album"),
-        orderBy("time", "desc")
+        collection(dbService, "record"),
+        orderBy("time", "asc")
     );
 
     return new Promise<RecordGetProps[]>(resolve => {
