@@ -13,12 +13,13 @@ function Example() {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    const chageNickName = (e: any) => {
-        setText(e.target.value)
+    const changeNickName = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setText(e.target.value);
     }
 
     const onClick = () => {
-        setNickName(text)
+        setNickName(text);
+        setShow(false);
     }
 
     return (
@@ -41,19 +42,22 @@ function Example() {
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                             <Form.Label>이름 & 닉네임</Form.Label>
                             <Form.Control 
-                                onChange={chageNickName}
+                                onChange={changeNickName}
                                 value={text}
                                 type="text"
                                 placeholder="순위에 기록될 이름입니다."
                             />
+                            <span>글자 미 입력 시 기록이 남지 않습니다.</span>
                         </Form.Group>
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
-                        Close
+                        취소
                     </Button>
-                    <Button variant="primary" onClick={onClick}>Understood</Button>
+                    <Button variant="primary" onClick={onClick}>
+                        등록
+                    </Button>
                 </Modal.Footer>
             </Modal>
         </>

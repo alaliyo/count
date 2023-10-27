@@ -5,11 +5,14 @@ import {
   countState,
   fontSizeState,
   millisecondsState,
+  nickNameState,
   timerState
 } from "./atom";
 import styled from "styled-components";
 import { useEffect } from "react";
 import Example from "./components/Example";
+import { RecordPost } from "./util/dbService";
+import OffCanvasExample from "./components/OffCanvasExample";
 
 function App() {
   const [count, setCount] = useRecoilState(countState);
@@ -18,6 +21,7 @@ function App() {
   const fontSize = useRecoilValue(fontSizeState);
   const [timer, setTimer] = useRecoilState(timerState);
   const [milliseconds, setMilliseconds] = useRecoilState(millisecondsState);
+  const nickName = useRecoilValue(nickNameState);
 
   const handleTouchStart = (event: any) => {
     if (start && event.touches.length >= 2) {
@@ -49,6 +53,7 @@ function App() {
     } else if (count >= 150) {
       setStart(false);
       setbtnName("끝! 다시!");
+      RecordPost({nickName, timer, milliseconds});
     }
   }, [count]);
 
@@ -70,10 +75,14 @@ function App() {
 
   return (
     <Box>
-      <Example />
-      {!start && <StartBtn onClick={startEvent}>{btnName}</StartBtn>}
-      <TimeSpan> {timer}.{milliseconds <= 9 ? `0${milliseconds}` : milliseconds}</TimeSpan>
-      <br />
+      <Header>
+        {!start ? (<>
+          <Example />
+          <StartBtn onClick={startEvent}>{btnName}</StartBtn>
+        </>) : <span>{nickName}:</span>}
+        <TimeSpan>{timer}.{milliseconds <= 9 ? `0${milliseconds}` : milliseconds}</TimeSpan>
+        <OffCanvasExample />
+      </Header>
       <CountBox>
         {start ? (
           <CountBtn size={fontSize} onClick={plusEvent}>
@@ -107,8 +116,15 @@ const Box = styled.div`
   width: 100%; /* 전체 너비로 확장 */
 `;
 
+const Header = styled.header`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const StartBtn = styled.button`
   font-size: 20px;
+  margin: 0 20px;
 `;
 
 const TimeSpan = styled.span`
