@@ -57,8 +57,8 @@ function App() {
 
   return (
     <Box>
-      {!start && <button onClick={startEvent}>{btnName}</button>}
-      <span> {timer}.{milliseconds <= 9 ? `0${milliseconds}` : milliseconds}</span>
+      {!start && <StartBtn onClick={startEvent}>{btnName}</StartBtn>}
+      <TimeSpan> {timer}.{milliseconds <= 9 ? `0${milliseconds}` : milliseconds}</TimeSpan>
       <br />
       <CountBox>
         {start ? (
@@ -88,6 +88,14 @@ interface BackgroundColotProps {
 
 const Box = styled.div`
   text-align: center;
+`;
+
+const StartBtn = styled.button`
+  font-size: 20px;
+`;
+
+const TimeSpan = styled.span`
+  font-size: 20px;
 `;
 
 const CountBox = styled.div`
